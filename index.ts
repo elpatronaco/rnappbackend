@@ -4,8 +4,8 @@ import mongoose from 'mongoose'
 import { json, urlencoded } from 'body-parser'
 
 import User, { IUser } from './schema/users'
-import { ILoginData, IUserData } from '../src/models/common'
-import register from '../src/App/register'
+import { ILoginData, IUserData } from '../rnapp/src/models/common'
+import register from '../rnapp/src/App/register'
 
 app.use(json())
 app.use(urlencoded({ extended: true }))
@@ -55,45 +55,50 @@ app.post('/user/login/:user', (req: express.Request, res: express.Response) => {
 })
 
 // register post
-app.post('/user/register/:user', (req: express.Request, res: express.Response) => {
-  try {
-    let registerData: IUserData = JSON.parse(req.params['user'])
-    if (!(registerData.email && registerData.password && registerData.name)) {
-      res.status(406)
-      res.send('Es necessiten paràmetres {email, password, name}')
-    } else {
-      User.findOne(
-        { email: registerData.email },
-        (error: mongoose.CallbackError, doc: IUser | null) => {
-          if (error) throw new Error(error.message)
-          if (!doc) {
-            User.create({
-              email: registerData.email,
-              password: registerData.password,
-              name: registerData.name,
-              birthdate: registerData.birthdate
-            })
-              .then((value: IUser) => {
-                res.status(200)
-                res.send(value)
+app.post(
+  '/user/register/:user',
+  (req: express.Request, res: express.Response) => {
+    try {
+      let registerData: IUserData = JSON.parse(req.params['user'])
+      if (!(registerData.email && registerData.password && registerData.name)) {
+        res.status(406)
+        res.send('Es necessiten paràmetres {email, password, name}')
+      } else {
+        User.findOne(
+          { email: registerData.email },
+          (error: mongoose.CallbackError, doc: IUser | null) => {
+            if (error) throw new Error(error.message)
+            if (!doc) {
+              User.create({
+                email: registerData.email,
+                password: registerData.password,
+                name: registerData.name,
+                birthdate: registerData.birthdate,
               })
-              .catch(reason => {
-                throw new Error(reason)
-              })
-          } else {
-            res.status(409)
-            res.send('El usuari ja existeix')
+                .then((value: IUser) => {
+                  res.status(200)
+                  res.send(value)
+                })
+                .catch((reason) => {
+                  throw new Error(reason)
+                })
+            } else {
+              res.status(409)
+              res.send('El usuari ja existeix')
+            }
           }
-        }
-      )
+        )
+      }
+    } catch (error) {
+      res.status(500)
+      res.send(error)
+      console.error(error)
     }
-  } catch (error) {
-    res.status(500)
-    res.send(error)
-    console.error(error)
   }
-})
+)
 
-app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.log(`Petició rebuda de ${req.ip}`)
-})
+app.use(
+  (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    console.log(`Petició rebuda de ${req.ip}`)
+  }
+)
