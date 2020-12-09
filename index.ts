@@ -17,11 +17,6 @@ app.listen(PORT, function () {
   console.log(`Servidor funcionando en el puerto ${PORT}`)
 })
 
-// TODO: log every action into the log schema
-/* app.use((req: req.Request) => {
-  req.
-}) */
-
 // connexió a la BBDD
 mongoose.connect(
   'mongodb+srv://rnappuser:iHr0yK1WaG6MwrFl@cluster0.e7dio.mongodb.net/rnapp?retryWrites=true&w=majority'
