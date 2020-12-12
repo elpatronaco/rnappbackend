@@ -1,3 +1,10 @@
 # development
 
 node_modules/
+
+# secrets
+
+sslkeys/
+*.crt
+*.key
+*.env
