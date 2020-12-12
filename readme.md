@@ -1,7 +1,7 @@
 # RNAPP
 
-This is the server repo for my mobile app project
+This is the server side of my [rnapp project](https://github.com/elpatronaco/rnapp)
 
 ## Backend
 
-Server based on the Express + MongoDB stack.
+Server based on Express (Node.js) and the NOSQL database MongoDB.
