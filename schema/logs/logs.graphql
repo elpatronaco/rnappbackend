@@ -1,0 +1,5 @@
+export type Log {
+    event: String!
+    logDate: String
+    User: [User!]!
+}

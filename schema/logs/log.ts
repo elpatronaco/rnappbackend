@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose'
-import { IUser } from './users'
+import { IUser } from '../users/users'
 export interface ILog extends mongoose.Document {
   event: string
   logDate: Date
@@ -13,4 +13,5 @@ export const LogSchema = new mongoose.Schema({
 })
 
 const Log = mongoose.model<ILog>('log', LogSchema)
-export default Log
+
+module.exports = Log
