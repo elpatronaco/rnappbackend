@@ -23,5 +23,9 @@
   },
   "devDependencies": {
     "@types/express": "github:types/npm-express"
+  },
+  "engines": {
+    "node": "14.x",
+    "npm": "6.x"
   }
 }
