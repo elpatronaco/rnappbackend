@@ -3,13 +3,14 @@ import * as express from 'express'
 import * as mongoose from 'mongoose'
 import * as expGraphql from 'express-graphql'
 import { buildSchema } from 'graphql'
-import User, { ILoginData } from './schema/users/users'
-import { path } from 'express/lib/application'
-import { IUser, IUserData } from './schema/users/users'
+import User, { ILoginData, IUser, IUserData } from './schema/users/users'
+const cors = require('cors')
 
 // el servidor escoltarà en el port que declarem com a variable de procés o el 4000
 const PORT = process.env.PORT || 4000
 const app = express()
+
+app.use(cors())
 
 app.listen(PORT, () => {
   console.log(`Servidor funcionant al port ${PORT}`)
